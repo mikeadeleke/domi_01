@@ -1,11 +1,15 @@
 Domi01::Application.routes.draw do
+  get "users/new"
   root to: "pages#home"
 
-  get "pages/home"
-  get "pages/help"
-  get "pages/team"
-  get "pages/about"
-  get "pages/contact"
+  get "/auth/:provider/callback" => "sessions#create", via: [:get, :post]
+  get "/signout" => "sessions#destroy", :as => :signout
+
+  match '/help', to: 'pages#help', via: 'get'
+  match '/team', to: 'pages#team', via: 'get'
+  match 'about', to: 'pages#about', via: 'get'
+  match 'contact', to: 'pages#contact', via: 'get'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
